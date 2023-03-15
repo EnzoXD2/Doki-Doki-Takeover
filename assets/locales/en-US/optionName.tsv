@@ -43,6 +43,7 @@ nameCacheSong	Song Caching
 nameCache	Cache Assets
 namePreload	Preload Assets
 nameShaders	Shaders
+nameLowEnd	Low End
 nameCursor	Custom Cursor
 nameMirror	Mirror Mode
 nameSudden	Sudden Death
