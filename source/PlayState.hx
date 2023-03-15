@@ -995,11 +995,10 @@ class PlayState extends MusicBeatState
 					cg1.alpha = 1;
 					cg1.cameras = [camGame2];
 					cg1.screenCenter();
-					cg2 = new BGSprite('credits/thanksforplaying', 'doki', 0, 0, 0, 0);
+
+					cg2 = new BGSprite('credits/thanksforplaying', 'doki', true, 0, 0, 0, 0);
 					cg2.alpha = 0.001;
 					cg2.cameras = [camGame2];
-					
-
 				}
 			case 'wilted':
 				{
@@ -1414,7 +1413,7 @@ class PlayState extends MusicBeatState
 					add(bg);
 
 					popup = new FlxSprite(312, 432);
-					popup.frames = Paths.getSparrowAtlas('bigmonika/bigika_delete', 'doki');
+					popup.frames = Paths.getSparrowAtlas('bigmonika/bigika_delete', 'doki', true);
 					popup.animation.addByPrefix('idle', "PopUpAnim", 24, false);
 					popup.animation.play('idle', true);
 					popup.antialiasing = SaveData.globalAntialiasing;
@@ -1520,7 +1519,7 @@ class PlayState extends MusicBeatState
 					cursorDDTO.alpha = 0.001;
 					add(cursorDDTO);
 
-					extractPopup = new BGSprite('libitina/extracting', 'doki', 0, 0, 0, 0);
+					extractPopup = new BGSprite('libitina/extracting', 'doki', true, 0, 0, 0, 0);
 					extractPopup.setGraphicSize(Std.int(extractPopup.width / defaultCamZoom));
 					extractPopup.updateHitbox();
 					extractPopup.screenCenter();
@@ -2143,7 +2142,7 @@ class PlayState extends MusicBeatState
 		encoreborder.cameras = [camHUD];
 		add(encoreborder);
 
-		waitin = new BGSprite('extraui/lol', 'preload', 153, 720, 0, 0);
+		waitin = new BGSprite('extraui/lol', 'preload', true, 153, 720, 0, 0);
 		waitin.cameras = [camHUD];
 		waitin.alpha = 0.001;
 		add(waitin);
@@ -2152,11 +2151,11 @@ class PlayState extends MusicBeatState
 		blackbarTop.alpha = 0.001;
 		blackbarTop.cameras = [camHUD];
 		add(blackbarTop);
+
 		blackbarBottom = new BGSprite('TightBars', 'shared', 0, 822, 0, 0);
 		blackbarBottom.alpha = 0.001;
 		blackbarBottom.cameras = [camHUD];
-		add(blackbarBottom);
-			
+		add(blackbarBottom);			
 
 		// Shitty layering but whatev it works LOL
 		// thanks ninja muffin :)
@@ -2364,6 +2363,7 @@ class PlayState extends MusicBeatState
 		if (hasLyrics)
 		{
 			lyrics = new FlxText();
+			lyrics.fieldWidth = FlxG.width;
 			lyrics.setFormat(LangUtil.getFont('grotesk'), 32, FlxColor.WHITE, CENTER, FlxTextBorderStyle.OUTLINE, FlxColor.BLACK);
 			lyrics.screenCenter(X);
 			lyrics.y = (FlxG.height * 0.72) + LangUtil.getFontOffset('grotesk');
@@ -2384,9 +2384,13 @@ class PlayState extends MusicBeatState
 
 		if (SaveData.judgementCounter)
 		{
-			judgementCounter.text = 'Doki: ${sicks}\nGood: ${goods}\nOk: ${bads}\nNo: ${shits}\nMiss: ${misses}\n';
-			if (SaveData.earlyLate) judgementCounter.text += '\nEarly: ${earlys}\nLate: ${lates}\n';
-			judgementCounter.text += '\n${LangUtil.getString('cmnMax')}: ${maxCombo}\n';
+			judgementCounter.text = 'Doki: $sicks\nGood: $goods\nOk: $bads\nNo: $shits\nMiss: $misses\n';
+
+			if (SaveData.earlyLate)
+				judgementCounter.text += '\n${LangUtil.getString('cmnEarly')}: $earlys\n${LangUtil.getString('cmnLate')}: $lates\n';
+
+			judgementCounter.text += '\n${LangUtil.getString('cmnMax')}: $maxCombo\n';
+
 			add(judgementCounter);
 		}
 
@@ -3322,7 +3326,7 @@ class PlayState extends MusicBeatState
 				var anim:String;
 				who = (isYuri ? 'catfightYuriPopup' : 'catfightNatPopup');
 				anim = (isYuri ? 'PopUpYuri' : 'PopUpNatsuki');
-				var catpopup:BGSprite = new BGSprite('extraui/' + who, 'preload', 400, 400, 1, 1, ['idle', anim]);
+				var catpopup:BGSprite = new BGSprite('extraui/' + who, 'preload', true, 400, 400, 1, 1, ['idle', anim]);
 				catpopup.setGraphicSize(Std.int(catpopup.width * 0.7));
 				catpopup.updateHitbox();
 				add(catpopup);
@@ -5535,13 +5539,13 @@ class PlayState extends MusicBeatState
 
 				if (noteDiff > 0)
 				{
-					currentTimingShown.text = "LATE";
+					currentTimingShown.text = LangUtil.getString('cmnLate').toUpperCase();
 					currentTimingShown.color = FlxColor.RED;
 					lates++;
 				}
 				else if (noteDiff < 0)
 				{
-					currentTimingShown.text = "EARLY";
+					currentTimingShown.text = LangUtil.getString('cmnEarly').toUpperCase();
 					currentTimingShown.color = FlxColor.CYAN;
 					earlys++;
 				}
@@ -6780,7 +6784,7 @@ class PlayState extends MusicBeatState
 								ease: FlxEase.sineOut,
 								onComplete: function(tween:FlxTween)
 								{
-									cg1.loadGraphic(Paths.image('credits/CreditsShit2', 'doki'));
+									cg1.loadGraphic(Paths.image('credits/CreditsShit2', 'doki', true));
 									cg1.screenCenter();
 								}
 							});
@@ -7393,7 +7397,7 @@ class PlayState extends MusicBeatState
 							libPopup(FlxG.random.int(668, 948), FlxG.random.int(68, 482), FlxG.random.float(0.95, 1.25), '', 'red', FlxG.random.float(0, 1));
 							libPopup(FlxG.random.int(44, 324), FlxG.random.int(68, 482), FlxG.random.float(0.95, 1.25), '', 'red', FlxG.random.float(0, 1));
 						case 2994:
-							libiWindow.loadGraphic(Paths.image('libitina/granted', 'doki'));
+							libiWindow.loadGraphic(Paths.image('libitina/granted', 'doki', true));
 							libiWindow.screenCenter();
 							libiWindow.alpha = 1;
 							libiWindow.scale.set();
@@ -7530,7 +7534,7 @@ class PlayState extends MusicBeatState
 
 		new FlxTimer().start(Delay, function(tmr:FlxTimer)
 		{
-			var eye:BGSprite = new BGSprite('libitina/popups$Style/$Type', 'doki', X, Y, 0, 0, ['idle', 'PopupAnim']);
+			var eye:BGSprite = new BGSprite('libitina/popups$Style/$Type', 'doki', true, X, Y, 0, 0, ['idle', 'PopupAnim']);
 			eye.scale.set(Scale, Scale);
 			eye.cameras = [camGame2];
 			grpPopups.add(eye);
@@ -7926,9 +7930,12 @@ class PlayState extends MusicBeatState
 
 		if (SaveData.judgementCounter)
 		{
-			judgementCounter.text = 'Doki: ${sicks}\nGood: ${goods}\nOk: ${bads}\nNo: ${shits}\nMiss: ${misses}\n';
-			if (SaveData.earlyLate) judgementCounter.text += '\nEarly: ${earlys}\nLate: ${lates}\n';
-			judgementCounter.text += '\n${LangUtil.getString('cmnMax')}: ${maxCombo}\n';
+			judgementCounter.text = 'Doki: $sicks\nGood: $goods\nOk: $bads\nNo: $shits\nMiss: $misses\n';
+
+			if (SaveData.earlyLate)
+				judgementCounter.text += '\n${LangUtil.getString('cmnEarly')}: $earlys\n${LangUtil.getString('cmnLate')}: $lates\n';
+
+			judgementCounter.text += '\n${LangUtil.getString('cmnMax')}: $maxCombo\n';
 		}
 	}
 

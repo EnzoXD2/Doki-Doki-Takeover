@@ -382,7 +382,7 @@ class ScrollSpeedOption extends Option
 
 	override function getValue():String
 	{
-		var visualValue:String = SaveData.scrollSpeed < 1 ? 'Song Default' : Std.string(FlxMath.roundDecimal(SaveData.scrollSpeed, 1));
+		var visualValue:String = SaveData.scrollSpeed < 1 ? LangUtil.getString('nameScrollDefault', 'option') : Std.string(FlxMath.roundDecimal(SaveData.scrollSpeed, 1));
 		return LangUtil.getString('descCurScroll', 'option') + ': ' + visualValue;
 	}
 }

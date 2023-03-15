@@ -822,7 +822,7 @@ class DialogueBox extends FlxSpriteGroup
 			default: //Normal will be default, important
 
 				box = new FlxSprite(-20, 45);
-				box.frames = Paths.getSparrowAtlas('dialogue/Text_Boxes', 'doki');
+				box.frames = Paths.getSparrowAtlas('dialogue/Text_Boxes', 'doki', true);
 				for (name in prefixMap.keys())
 					box.animation.addByPrefix(name, prefixMap[name], 24, false);
 				
