@@ -49,6 +49,11 @@ class CloseGameSubState extends MusicBeatSubstate
 		selectGrp.add(textYes);
 		selectGrp.add(textNo);
 		add(selectGrp);
+		
+		#if android
+                addVirtualPad(LEFT_RIGHT, A_B);
+                addPadCamera();
+                #end
 
 		changeItem();
 	}
